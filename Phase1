@@ -1,0 +1,11 @@
+#include<iostream>
+#include<stdio.h>
+
+int main()
+
+{
+
+int ArrivalTime[10],BurstTime[10],RemainingTime[10],EndTime,i,Smallest,ProcessGantt[100];
+
+int Remain=0,n,Time,Sum_Wait=0,Sum_Turnaround=0;
+}
