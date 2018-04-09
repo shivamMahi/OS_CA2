@@ -1,0 +1,56 @@
+#include<iostream>
+#include<stdio.h>
+
+int main()
+
+{
+
+int ArrivalTime[10],BurstTime[10],RemainingTime[10],EndTime,i,Smallest,ProcessGantt[100];
+
+int Remain=0,n,Time,Sum_Wait=0,Sum_Turnaround=0;
+
+printf("Enter no of Processes : ");
+
+scanf("%d",&n);
+
+for(i=0;i<n;i++)
+
+{
+
+printf("Enter arrival time for Process P%d : ",i+1);
+
+scanf("%d",&ArrivalTime[i]);
+
+printf("Enter burst time for Process P%d : ",i+1);
+
+scanf("%d",&BurstTime[i]);
+
+RemainingTime[i]=BurstTime[i];
+
+}
+
+printf("\n\nProcess\t|Turnaround Time| Waiting Time\n\n");
+
+RemainingTime[9]=9999;
+
+for(Time=0;Remain!=n;Time++)
+
+{
+
+Smallest=9;
+
+for(i=0;i<n;i++)
+
+{
+
+if(ArrivalTime[i]<=Time && RemainingTime[i]<RemainingTime[Smallest] && RemainingTime[i]>0)
+
+{
+
+ProcessGantt[Time]=i;
+
+Smallest=i;
+
+}
+
+}
