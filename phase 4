@@ -1,0 +1,90 @@
+#include<iostream>
+#include<stdio.h>
+
+int main()
+
+{
+
+int ArrivalTime[10],BurstTime[10],RemainingTime[10],EndTime,i,Smallest,ProcessGantt[100];
+
+int Remain=0,n,Time,Sum_Wait=0,Sum_Turnaround=0;
+
+printf("Enter no of Processes : ");
+
+scanf("%d",&n);
+
+for(i=0;i<n;i++)
+
+{
+
+printf("Enter arrival time for Process P%d : ",i+1);
+
+scanf("%d",&ArrivalTime[i]);
+
+printf("Enter burst time for Process P%d : ",i+1);
+
+scanf("%d",&BurstTime[i]);
+
+RemainingTime[i]=BurstTime[i];
+
+}
+
+printf("\n\nProcess\t|Turnaround Time| Waiting Time\n\n");
+
+RemainingTime[9]=9999;
+
+for(Time=0;Remain!=n;Time++)
+
+{
+
+Smallest=9;
+
+for(i=0;i<n;i++)
+
+{
+
+if(ArrivalTime[i]<=Time && RemainingTime[i]<RemainingTime[Smallest] && RemainingTime[i]>0)
+
+{
+
+ProcessGantt[Time]=i;
+
+Smallest=i;
+
+}
+
+}
+
+RemainingTime[Smallest]--;
+
+if(RemainingTime[Smallest]==0)
+
+{
+
+Remain++;
+
+EndTime=Time+1;
+
+printf("\nP[%d]\t|\t%d\t|\t%d",Smallest+1,EndTime-ArrivalTime[Smallest],EndTime-BurstTime[Smallest]-ArrivalTime[Smallest]);
+
+Sum_Wait+=EndTime-BurstTime[Smallest]-ArrivalTime[Smallest];
+
+Sum_Turnaround+=EndTime-ArrivalTime[Smallest];
+
+}
+
+}
+
+printf("\n\nAverage waiting time = %f\n",Sum_Wait*1.0/n);
+
+printf("Average Turnaround time = %f\n\n",Sum_Turnaround*1.0/5);
+
+for(i=0;i<=Time;i++)
+
+{
+
+printf("%d->P%d\n ",i,ProcessGantt[i]+1);
+
+}
+
+}
