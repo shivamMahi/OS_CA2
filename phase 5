@@ -1,0 +1,106 @@
+#include<iostream>
+#include<stdio.h>
+
+int main()
+
+{
+
+int ArrivalTime[10],BurstTime[10],RemainingTime[10],EndTime,i,Smallest,ProcessGantt[100];
+
+int Remain=0,n,Time,Sum_Wait=0,Sum_Turnaround=0;
+
+printf("Enter no of Processes : ");
+
+scanf("%d",&n);
+
+for(i=0;i<n;i++)
+
+{
+
+printf("Enter arrival time for Process P%d : ",i+1);
+
+scanf("%d",&ArrivalTime[i]);
+
+printf("Enter burst time for Process P%d : ",i+1);
+
+scanf("%d",&BurstTime[i]);
+
+RemainingTime[i]=BurstTime[i];
+
+}
+
+printf("\n\nProcess\t|Turnaround Time| Waiting Time\n\n");
+
+RemainingTime[9]=9999;
+
+for(Time=0;Remain!=n;Time++)
+
+{
+
+Smallest=9;
+
+for(i=0;i<n;i++)
+
+{
+
+if(ArrivalTime[i]<=Time && RemainingTime[i]<RemainingTime[Smallest] && RemainingTime[i]>0)
+
+{
+
+ProcessGantt[Time]=i;
+
+Smallest=i;
+
+}
+
+}
+
+RemainingTime[Smallest]--;
+
+if(RemainingTime[Smallest]==0)
+
+{
+
+Remain++;
+
+EndTime=Time+1;
+
+printf("\nP[%d]\t|\t%d\t|\t%d",Smallest+1,EndTime-ArrivalTime[Smallest],EndTime-BurstTime[Smallest]-ArrivalTime[Smallest]);
+
+Sum_Wait+=EndTime-BurstTime[Smallest]-ArrivalTime[Smallest];
+
+Sum_Turnaround+=EndTime-ArrivalTime[Smallest];
+
+}
+
+}
+
+printf("\n\nAverage waiting time = %f\n",Sum_Wait*1.0/n);
+
+printf("Average Turnaround time = %f\n\n",Sum_Turnaround*1.0/5);
+
+for(i=0;i<=Time;i++)
+
+{
+
+printf("%d->P%d\n ",i,ProcessGantt[i]+1);
+
+}
+
+}
+How the above code works(EXPLANATION):
+
+//Line no 8-16 are used for taking inputs. The array variables `at` and `bt` stores arrival time and burst time of processes.
+//Array `rt` stores the remaining time of the processes which initially are equal to the burst time of the processes. This is the time to complete execution of all the processes.
+//Line no 18 starts a loop where time starts from zero, line no 20 to 30 are used to find a process which have the least remaining time and it’s arrival time is less than or equal to the current time. This condition is checked at every unit time, that is why time is incremented by 1 (time++).
+//Line no 26 is used to print the arrival time and burst time for finished processes. At this moment, variable `time` gives the time of start of the process.
+//Therefore Turnaround time=(time+burst time-arrival time),
+//Waiting time =(time – arrival time)
+//In line no 28 remaining time for shortest process is decreased by one since time is increased by one.
+//If a particular process have just finished/completed, then it satisfies the condition in line no 29.
+//Since the variable time stores the current time, and the process was running at this moment, therefore its ending time = time+1 (line no 32).
+//Since
+//burst time+waiting time = end time - Start time
+//therefore
+//waiting time=end Time-burst time-arrival time
+//waiting time and turnaround time of all processes are summed up and divided by n to give their average.
